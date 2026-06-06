@@ -20,7 +20,13 @@ Do not add dependencies or replace the stack unless asked.
 
 ## Skills and Docs
 
-Use relevant installed skills for framework-specific work.
+Project agent skills live in `.agents/skills/` with versions pinned in `skills-lock.json`. Use these for framework-specific work during the workshop.
+
+Install or update skills with the Skills CLI:
+
+```bash
+npx skills add <owner/repo> --skill <skill-name>
+```
 
 For Next.js-specific uncertainty, prefer the installed docs in `node_modules/next/dist/docs/`.
 
