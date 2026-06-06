@@ -70,6 +70,7 @@ describe("MarketBuyForm signed-in buyable state", () => {
 
     expect(source).toContain('id="buy-amount"');
     expect(source).toContain("formatFakeDollars(balanceCents)");
+    expect(source).toContain("parseDollarsToCents");
     expect(source).toContain("/positions");
     expect(source).toContain("router.refresh()");
   });

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { FakeMoneyChip } from "@/components/marketlab/fake-money-chip";
 import { Header } from "@/components/marketlab/header";
 import { MarketBuySection } from "@/components/marketlab/market-buy-section";
 import { MarketStatusBadge } from "@/components/marketlab/market-status-badge";
@@ -44,7 +45,7 @@ export default async function MarketDetailPage({
       <div className="min-h-svh bg-background text-foreground">
         <Header />
         <main className="mx-auto max-w-6xl px-4 py-14">
-          <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          <p className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
             {error}
           </p>
         </main>
@@ -61,36 +62,42 @@ export default async function MarketDetailPage({
   return (
     <div className="min-h-svh bg-background text-foreground">
       <Header />
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
-        <div className="mb-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+        <div className="mb-6">
           <Button asChild variant="ghost" size="sm" className="-ml-2">
             <Link href="/markets">← Back to markets</Link>
           </Button>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          <FakeMoneyChip>
+            This workshop app does not use real money.
+          </FakeMoneyChip>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
           <div className="space-y-6">
-            <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <section className="surface-card p-6">
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <h1 className="text-3xl font-semibold tracking-tight text-card-foreground sm:text-4xl">
+                <h1 className="text-2xl font-semibold tracking-tight text-card-foreground sm:text-3xl">
                   {market.title}
                 </h1>
                 <MarketStatusBadge status={market.status} />
               </div>
-              <p className="mt-4 text-base leading-7 text-muted-foreground">
+              <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
                 {market.description}
               </p>
-              <dl className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-border bg-background/60 p-4">
-                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              <dl className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="surface-inset p-4">
+                  <dt className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
                     Status
                   </dt>
                   <dd className="mt-1 text-sm font-medium text-foreground">
                     {formatMarketStatus(market.status)}
                   </dd>
                 </div>
-                <div className="rounded-xl border border-border bg-background/60 p-4">
-                  <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                <div className="surface-inset p-4">
+                  <dt className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
                     Close date
                   </dt>
                   <dd className="mt-1 text-sm font-medium text-foreground">
@@ -100,7 +107,7 @@ export default async function MarketDetailPage({
               </dl>
             </section>
 
-            <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <section className="surface-card p-6">
               <h2 className="text-lg font-semibold text-card-foreground">
                 Outcomes
               </h2>
@@ -113,7 +120,7 @@ export default async function MarketDetailPage({
                   <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
                     Yes
                   </p>
-                  <p className="mt-1 text-2xl font-semibold text-foreground">
+                  <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
                     {formatYesChancePercent(chart.currentYesChance)}
                   </p>
                 </div>
@@ -121,7 +128,7 @@ export default async function MarketDetailPage({
                   <p className="text-sm font-medium text-rose-800 dark:text-rose-200">
                     No
                   </p>
-                  <p className="mt-1 text-2xl font-semibold text-foreground">
+                  <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
                     {formatYesChancePercent(1 - chart.currentYesChance)}
                   </p>
                 </div>
@@ -136,7 +143,7 @@ export default async function MarketDetailPage({
             />
           </div>
 
-          <aside className="space-y-6">
+          <aside>
             <MarketBuySection market={market} />
           </aside>
         </div>

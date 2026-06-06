@@ -44,6 +44,17 @@ describe("positions page", () => {
 
     expect(source).toMatch(/No positions yet/i);
   });
+
+  it("shows a summary row when the user has positions", () => {
+    const source = readFileSync(
+      join(process.cwd(), "src/app/positions/page.tsx"),
+      "utf8",
+    );
+
+    expect(source).toMatch(/Markets held/i);
+    expect(source).toMatch(/Yes exposure/i);
+    expect(source).toMatch(/No exposure/i);
+  });
 });
 
 describe("positions rendering helpers", () => {
@@ -70,11 +81,11 @@ describe("buy server action validation", () => {
 describe("header navigation", () => {
   it("includes My Positions link", () => {
     const source = readFileSync(
-      join(process.cwd(), "src/components/marketlab/header-nav.tsx"),
+      join(process.cwd(), "src/components/marketlab/nav-links.tsx"),
       "utf8",
     );
 
-    expect(source).toContain('href="/positions"');
+    expect(source).toContain('href: "/positions"');
     expect(source).toContain("My Positions");
   });
 });

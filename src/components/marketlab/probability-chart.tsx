@@ -68,7 +68,7 @@ export function ProbabilityChart({
   const yTicks = [0, 25, 50, 75, 100];
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <section className="surface-card p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold text-card-foreground">
@@ -76,7 +76,7 @@ export function ProbabilityChart({
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Current Yes chance:{" "}
-            <span className="font-medium text-foreground">
+            <span className="font-semibold tabular-nums text-brand">
               {formatYesChancePercent(currentYesChance)}
             </span>
           </p>
@@ -86,15 +86,15 @@ export function ProbabilityChart({
             </p>
           ) : null}
         </div>
-        <div className="flex items-center gap-1 rounded-lg border border-border bg-background p-1">
+        <div className="flex items-center gap-1 rounded-xl border border-border bg-muted/30 p-1">
           {(["all", "7d", "24h"] as const).map((option) => (
             <button
               key={option}
               type="button"
               className={cn(
-                "rounded-md px-2.5 py-1 text-xs font-medium uppercase tracking-wide transition-colors",
+                "rounded-lg px-2.5 py-1 text-xs font-medium uppercase tracking-wide transition-colors focus-visible:ring-3 focus-visible:ring-ring/30",
                 range === option
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground",
               )}
               onClick={() => setRange(option)}
@@ -123,7 +123,7 @@ export function ProbabilityChart({
                   y1={y}
                   y2={y}
                   stroke="currentColor"
-                  strokeOpacity={0.12}
+                  strokeOpacity={0.1}
                 />
                 <text
                   x={PADDING.left - 8}
@@ -143,7 +143,7 @@ export function ProbabilityChart({
             y1={CHART_HEIGHT - PADDING.bottom}
             y2={CHART_HEIGHT - PADDING.bottom}
             stroke="currentColor"
-            strokeOpacity={0.25}
+            strokeOpacity={0.2}
           />
 
           <text
@@ -168,7 +168,7 @@ export function ProbabilityChart({
               fill="none"
               stroke="currentColor"
               strokeWidth={2.5}
-              className="text-emerald-600 dark:text-emerald-400"
+              className="text-brand"
             />
           ) : null}
         </svg>
