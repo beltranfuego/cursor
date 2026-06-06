@@ -18,6 +18,8 @@ describe("HeaderNav", () => {
     const html = renderToStaticMarkup(<HeaderNav user={null} profile={null} />);
 
     expect(html).toContain("Markets");
+    expect(html).toContain("My Positions");
+    expect(html).toContain("/positions");
     expect(html).toContain("Sign in");
     expect(html).toContain("Sign up");
     expect(html).toContain("/login?mode=sign-in");

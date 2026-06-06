@@ -152,6 +152,14 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      buy_market_shares: {
+        Args: {
+          p_amount_cents: number;
+          p_market_id: string;
+          p_side: string;
+        };
+        Returns: Json;
+      };
       starting_balance_cents: { Args: never; Returns: number };
     };
     Enums: {

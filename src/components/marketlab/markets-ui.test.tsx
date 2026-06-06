@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
-import { MarketBuyPlaceholder } from "@/components/marketlab/market-buy-placeholder";
 import { MarketCard } from "@/components/marketlab/market-card";
 import { ThemeToggle } from "@/components/marketlab/theme-toggle";
 import { formatCloseDate, formatMarketStatus } from "@/lib/markets/format";
@@ -38,19 +37,6 @@ describe("MarketCard", () => {
   });
 });
 
-describe("MarketBuyPlaceholder", () => {
-  it("shows buying unavailable for closed markets", () => {
-    const html = renderToStaticMarkup(
-      <MarketBuyPlaceholder
-        market={{ status: "closed", close_date: sampleMarket.close_date }}
-      />,
-    );
-
-    expect(html).toMatch(/unavailable/i);
-    expect(html).toContain("Unavailable");
-  });
-});
-
 describe("ThemeToggle", () => {
   it("renders a theme toggle control", () => {
     const html = renderToStaticMarkup(<ThemeToggle />);
@@ -75,6 +61,8 @@ describe("market pages", () => {
       expect(source).not.toContain("quito.png");
       expect(source).not.toContain("hero2-bg.webp");
     }
+
+    expect(detailSource).toContain("MarketBuySection");
   });
 
   it("includes an empty market state message on the markets page", () => {

@@ -31,6 +31,9 @@ export function HeaderNav({ user, profile }: HeaderNavProps) {
             <Link href="/markets" className="hover:text-foreground">
               Markets
             </Link>
+            <Link href="/positions" className="hover:text-foreground">
+              My Positions
+            </Link>
           </nav>
         </div>
 
