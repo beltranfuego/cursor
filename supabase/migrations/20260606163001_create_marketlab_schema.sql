@@ -72,6 +72,8 @@ create policy "Users can read own profile"
   to authenticated
   using ((select auth.uid()) = id);
 
+grant select on table public.profiles to authenticated;
+
 -- ---------------------------------------------------------------------------
 -- markets (binary Yes/No only)
 -- ---------------------------------------------------------------------------
@@ -99,6 +101,8 @@ create policy "Markets are publicly readable"
   for select
   to anon, authenticated
   using (true);
+
+grant select on table public.markets to anon, authenticated;
 
 -- ---------------------------------------------------------------------------
 -- positions (one row per user per market; 1 cent spent = 1 share cent)
@@ -130,6 +134,8 @@ create policy "Users can read own positions"
   to authenticated
   using ((select auth.uid()) = user_id);
 
+grant select on table public.positions to authenticated;
+
 -- ---------------------------------------------------------------------------
 -- ledger_entries (balance changes happen server-side later via RPC)
 -- ---------------------------------------------------------------------------
@@ -153,3 +159,5 @@ create policy "Users can read own ledger entries"
   for select
   to authenticated
   using ((select auth.uid()) = user_id);
+
+grant select on table public.ledger_entries to authenticated;
