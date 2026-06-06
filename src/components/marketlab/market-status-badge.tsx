@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 export function MarketStatusBadge({ status }: { status: string }) {
   const styles =
     status === "open"
@@ -8,7 +10,10 @@ export function MarketStatusBadge({ status }: { status: string }) {
 
   return (
     <span
-      className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-wide ${styles}`}
+      className={cn(
+        "inline-flex shrink-0 rounded-full border px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide",
+        styles,
+      )}
     >
       {status}
     </span>

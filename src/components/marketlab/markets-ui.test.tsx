@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
+import { AppLogo } from "@/components/marketlab/app-logo";
 import { MarketCard } from "@/components/marketlab/market-card";
 import { ThemeToggle } from "@/components/marketlab/theme-toggle";
 import { formatCloseDate, formatMarketStatus } from "@/lib/markets/format";
@@ -34,6 +35,16 @@ describe("MarketCard", () => {
     expect(html).toContain(sampleMarket.status);
     expect(html).toContain("View details");
     expect(html).toContain(`/markets/${sampleMarket.id}`);
+  });
+});
+
+describe("AppLogo", () => {
+  it("renders logo image and wordmark", () => {
+    const html = renderToStaticMarkup(<AppLogo />);
+
+    expect(html).toContain("/logo/iso-marketlab.webp");
+    expect(html).toContain("Market");
+    expect(html).toContain("Lab");
   });
 });
 

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const fieldClassName =
-  "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-emerald-600/60 focus:ring-2 focus:ring-emerald-600/20 dark:focus:border-emerald-400/60 dark:focus:ring-emerald-400/20";
+  "w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30";
 
 function AuthFields({ mode }: { mode: "sign-in" | "sign-up" }) {
   return (
@@ -108,7 +108,7 @@ export function AuthForm() {
 
   if (state.needsEmailConfirmation && state.email) {
     return (
-      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <div className="w-full max-w-md surface-card p-6">
         <EmailConfirmationNotice
           email={state.email}
           onBackToSignIn={() => setMode("sign-in")}
@@ -118,17 +118,17 @@ export function AuthForm() {
   }
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-sm">
-      <div className="mb-6 flex rounded-lg border border-border p-1">
+    <div className="w-full max-w-md surface-card p-6">
+      <div className="mb-6 flex rounded-xl border border-border bg-muted/30 p-1">
         {(["sign-up", "sign-in"] as const).map((value) => (
           <button
             key={value}
             type="button"
             onClick={() => setMode(value)}
             className={cn(
-              "flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              "flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-3 focus-visible:ring-ring/30",
               mode === value
-                ? "bg-emerald-600/10 text-foreground dark:bg-emerald-400/15"
+                ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -140,7 +140,7 @@ export function AuthForm() {
       <form action={formAction} className="grid gap-4">
         <AuthFields mode={mode} />
         {state.error ? (
-          <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <p className="rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
             {state.error}
           </p>
         ) : null}
@@ -154,8 +154,9 @@ export function AuthForm() {
       </form>
 
       {mode === "sign-up" ? (
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          New accounts receive $1,000 in fake workshop balance.
+        <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
+          New accounts receive $1,000 in fake workshop balance. Spend fake cents
+          to collect Yes or No shares.
         </p>
       ) : null}
     </div>
