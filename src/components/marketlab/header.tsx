@@ -1,38 +1,63 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { isSupabaseConnected } from "@/lib/supabase/config";
+import { signOut } from "@/app/login/actions";
+import { ThemeToggle } from "@/components/marketlab/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { formatCents } from "@/lib/money";
+import { getCurrentProfile, getCurrentUser } from "@/lib/supabase/auth";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
-function StatusBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-2 rounded-full border border-[#00d395]/30 bg-[#00d395]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md shadow-[0_0_15px_rgba(0,211,149,0.15)]">
-      <span className="h-1.5 w-1.5 rounded-full bg-[#00d395] animate-pulse" />
-      {children}
-    </div>
-  );
-}
+export async function Header() {
+  const user = isSupabaseConfigured ? await getCurrentUser() : null;
+  const profile = user ? await getCurrentProfile() : null;
+  const displayName = profile
+    ? [profile.first_name, profile.last_name].filter(Boolean).join(" ") ||
+      user?.email
+    : null;
 
-export function Header() {
   return (
-    <header className="border-b border-white/10 bg-[#080a0d] text-white">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-5 sm:flex-row sm:justify-between">
-        <div>
-          <Link href="/" className="block">
-            <Image
-              src="/logo/logo-marketlab.webp"
-              alt="MarketLab"
-              width={677}
-              height={369}
-              className="h-24 w-44 object-contain"
-              priority
-            />
+    <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+        <div className="flex items-center gap-6">
+          <Link
+            href="/"
+            className="text-lg font-semibold tracking-tight text-foreground"
+          >
+            MarketLab
           </Link>
+          <nav className="flex items-center gap-4 text-sm text-muted-foreground">
+            <Link href="/markets" className="hover:text-foreground">
+              Markets
+            </Link>
+            {user && profile ? (
+              <span className="hidden sm:inline">
+                Balance{" "}
+                <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                  {formatCents(profile.balance_cents)}
+                </span>
+              </span>
+            ) : null}
+          </nav>
         </div>
-        <div className="flex flex-col items-center gap-2 sm:items-end">
-          <StatusBadge>Cursor Workshop / Quito</StatusBadge>
-          {isSupabaseConnected ? (
-            <StatusBadge>Supabase Connected</StatusBadge>
-          ) : null}
+
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {user ? (
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="max-w-32 truncate text-sm text-muted-foreground">
+                {displayName}
+              </span>
+              <form action={signOut}>
+                <Button type="submit" variant="outline" size="sm">
+                  Sign out
+                </Button>
+              </form>
+            </div>
+          ) : (
+            <Button asChild variant="outline" size="sm">
+              <Link href="/login">Sign in</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
