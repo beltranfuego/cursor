@@ -6,6 +6,8 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
   error?: string;
+  needsEmailConfirmation?: boolean;
+  email?: string;
 };
 
 export async function signUp(
@@ -22,7 +24,7 @@ export async function signUp(
   }
 
   const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -37,7 +39,11 @@ export async function signUp(
     return { error: error.message };
   }
 
-  redirect("/markets");
+  if (data.session) {
+    redirect("/markets");
+  }
+
+  return { needsEmailConfirmation: true, email };
 }
 
 export async function signIn(

@@ -2,8 +2,12 @@ import Link from "next/link";
 
 import { Header } from "@/components/marketlab/header";
 import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "@/lib/supabase/auth";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
-export default function Home() {
+export default async function Home() {
+  const user = isSupabaseConfigured ? await getCurrentUser() : null;
+
   return (
     <div className="min-h-svh bg-background text-foreground">
       <Header />
@@ -25,9 +29,11 @@ export default function Home() {
             <Button asChild>
               <Link href="/markets">Browse markets</Link>
             </Button>
-            <Button asChild variant="outline">
-              <Link href="/login">Sign in</Link>
-            </Button>
+            {!user ? (
+              <Button asChild variant="outline">
+                <Link href="/login?mode=sign-in">Sign in</Link>
+              </Button>
+            ) : null}
           </div>
         </section>
 

@@ -4,3 +4,7 @@ export function formatCents(cents: number): string {
     currency: "USD",
   }).format(cents / 100);
 }
+
+export function formatFakeBalance(cents: number): string {
+  return `${formatCents(cents)} fake`;
+}
